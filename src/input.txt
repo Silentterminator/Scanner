@@ -1,0 +1,4 @@
+read
+/* This is a comment */
+*
+Hello five 5
