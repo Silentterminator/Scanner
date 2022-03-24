@@ -1,22 +1,23 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
-
+import java.util.Set;
 
 
 public class Scanner {
 
     private File file;
     private int state;
-    private final List tokens;
+    private final List<String> tokens;
+
+    private final Set<Character> possibleCharacters = new HashSet<>();
 
     public Scanner(File file) throws IOException {
         this.file = file;
-        tokens = new ArrayList<String>();
+        tokens = new ArrayList<>();
         parseFile();
     }
 
@@ -27,7 +28,7 @@ public class Scanner {
         // Declaring a string variable
         String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
         String line = br.readLine();
-        ArrayList<String> st = new ArrayList<String>();
+        ArrayList<String> st = new ArrayList<>();
 
         // Condition holds true till
         // there is character in a string
@@ -66,14 +67,6 @@ public class Scanner {
         }
         System.out.println(tokens);
         br.close();
-    }
-
-    public void automata() {
-        switch (this.state) {
-            case 1:
-
-                break;
-        }
     }
 
     public File getFile() {
