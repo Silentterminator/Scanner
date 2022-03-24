@@ -99,6 +99,7 @@ public class Scanner {
         }
 
         possibleCharacters.addAll(token);
+        token.clear();
     }
 
 }
