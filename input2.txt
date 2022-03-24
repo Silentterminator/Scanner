@@ -1,0 +1,7 @@
+/* TestFile!!eone1! */
+
+2*(5+2)
+eleven
+/* The quick brown fox jumps over the lazy dog */
+char char
+token
