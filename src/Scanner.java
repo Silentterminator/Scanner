@@ -1,10 +1,7 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Set;
 
 
 public class Scanner {
@@ -19,6 +16,7 @@ public class Scanner {
         this.file = file;
         tokens = new ArrayList<>();
         parseFile();
+        addTokens();
     }
 
     public void parseFile() throws IOException {
@@ -83,6 +81,24 @@ public class Scanner {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    private void addTokens() {
+        List<Character> token = new ArrayList<>(Arrays.asList('(', ')', '+', '-', '*', ':', '=', '.',
+                '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'));
+
+//        List<Character> token = new ArrayList<>();
+        // add lower case alphabet to tokens
+        for (int i = 65; i <= 90; i++) {
+            token.add((char) i);
+        }
+
+        // add upper case alphabet to tokens
+        for (int i = 97; i <= 122; i++) {
+            token.add((char) i);
+        }
+
+        possibleCharacters.addAll(token);
     }
 
 }
