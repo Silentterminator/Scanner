@@ -30,6 +30,7 @@ public class Scanner {
 
         // Condition holds true till
         // there is character in a string
+
         while (line != null)
         {
             // Print the string
@@ -37,6 +38,7 @@ public class Scanner {
             st.add(line);
             line = br.readLine();
         }
+        //System.out.println(st);
 
         for(int x = 0; x<st.size();x++)
         {
@@ -44,11 +46,19 @@ public class Scanner {
                 tokens.add("read");
             if(st.get(x).contains("write")||st.get(x).contains("Write"))
                 tokens.add("write");
+            if(!(st.get(x).contains("/*")&&st.get(x).contains("*/")||st.get(x).contains("//")))
+                if(st.get(x).contains("*"))
+                    tokens.add("times");
+
+
             for(int n = 0; n<numbers.length;n++)
             {
                 if(st.get(x).contains(numbers[n]))
                     tokens.add("number");
             }
+
+
+
         }
         System.out.println(tokens);
 
