@@ -12,7 +12,6 @@ public class Scanner {
     private File file;
     private int state;
     private final List tokens;
-    //public int numbers{0,1,2,3,4,5,6,7,8,9};
 
     public Scanner(File file) throws IOException {
         this.file = file;
@@ -25,6 +24,7 @@ public class Scanner {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         // Declaring a string variable
+        String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
         String line = br.readLine();
         ArrayList<String> st = new ArrayList<String>();
 
@@ -44,6 +44,11 @@ public class Scanner {
                 tokens.add("read");
             if(st.get(x).contains("write")||st.get(x).contains("Write"))
                 tokens.add("write");
+            for(int n = 0; n<numbers.length;n++)
+            {
+                if(st.get(x).contains(numbers[n]))
+                    tokens.add("number");
+            }
         }
         System.out.println(tokens);
 
