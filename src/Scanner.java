@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 
+
 public class Scanner {
 
     private File file;
@@ -34,12 +35,10 @@ public class Scanner {
         while (line != null)
         {
             // Print the string
-                //System.out.println(st);
             st.add(line);
             line = br.readLine();
-        }
-        //System.out.println(st);
 
+        }
         for(int x = 0; x<st.size();x++)
         {
             if(st.get(x).contains("read")||st.get(x).contains("Read"))
@@ -47,21 +46,25 @@ public class Scanner {
             if(st.get(x).contains("write")||st.get(x).contains("Write"))
                 tokens.add("write");
             if(!(st.get(x).contains("/*")&&st.get(x).contains("*/")||st.get(x).contains("//")))
+            {
                 if(st.get(x).contains("*"))
+                {
                     tokens.add("times");
-
-
+                }
+                if((st.get(x).contains(" ")))
+                {
+                    if(!st.get(x).contains(numbers[x]))
+                        System.out.println("ID: "+st.get(x));
+                }
+            }
             for(int n = 0; n<numbers.length;n++)
             {
                 if(st.get(x).contains(numbers[n]))
                     tokens.add("number");
             }
 
-
-
         }
         System.out.println(tokens);
-
         br.close();
     }
 
