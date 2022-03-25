@@ -2,3 +2,5 @@ read
 /* This is a comment */
 *
 Hello five 5
+// COMMENT
+Test lol
