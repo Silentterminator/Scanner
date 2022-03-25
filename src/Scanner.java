@@ -82,7 +82,17 @@ public class Scanner {
                 // search for ., if followed by digit^, print("number")
                 // regular digit 99999999, print("number") BUT after finds digits, look for period, signifies a decimal, PRINT("NUMBER")
                 // letter,digit = token - letter = token
-//                if (Character.isAlphabetic(currentCha r))
+                if (Character.isAlphabetic(currentChar)&&Character.isAlphabetic(nextChar))
+                {
+                    while(Character.isAlphabetic(nextChar)&&Character.isAlphabetic(nextChar+1))
+                    {
+                        System.out.println("Contents: "+ characterArray.get(i));
+                        i++;
+                        nextChar = characterArray.get(i+1);
+                    }
+                    tokens.add("id");
+                }
+
             }
         }
         System.out.println(tokens);
