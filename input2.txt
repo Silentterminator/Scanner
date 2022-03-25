@@ -1,7 +1,6 @@
 /* TestFile!!eone1! */
 
-2*(5+2)
-eleven
-/* The quick brown fox jumps over the lazy dog */
-char char
-token
+412.31232*(.5123+23332)
+22-124
+99/12
+.12+444
