@@ -84,7 +84,7 @@ public class Scanner {
                 // letter,digit = token - letter = token
                 if (Character.isAlphabetic(currentChar)&&Character.isAlphabetic(nextChar))
                 {
-                    while(Character.isAlphabetic(nextChar)&&Character.isAlphabetic(nextChar+1))
+                    while(Character.isAlphabetic(nextChar)&&Character.isAlphabetic(nextChar+1)||Character.isDigit(nextChar+1))
                     {
                         System.out.println("Contents: "+ characterArray.get(i));
                         i++;
