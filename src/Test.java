@@ -11,6 +11,8 @@ public class Test {
     private final char EMPTY_CHAR_CHARACTER = '\u0000';
     private final char NEW_LINE_CHARACTER = '\n';
 
+    private final char PERIOD = '.';
+
     public Test(File file) {
         this.file = file;
     }
@@ -27,7 +29,7 @@ public class Test {
 
         boolean inComment = false;                          // Variable to let us know if we're in a comment or not
         char commentCharacter = EMPTY_CHAR_CHARACTER;       // Reference to if we're in a // comment or /* comment
-        for (int i = 0; i < characterArray.size(); i++) {
+        for (int i = 0; i < characterArray.size()-1; i++) {
 
             char currentChar = characterArray.get(i);
             char nextChar = characterArray.get(i+1);
@@ -48,11 +50,30 @@ public class Test {
                     i++;
                 }
             } else {
-                // search for (
+                if (Character.isDigit(currentChar) || (currentChar == PERIOD && Character.isDigit(nextChar))) {
+                    while (Character.isDigit(nextChar) || nextChar == PERIOD) {
+                        i++;
+                        nextChar = characterArray.get(i+1);
+                    }
+                    tokens.add("number");
+                }
+
                 if (currentChar == '(') {
                     tokens.add("lparen");
-                    while ()
+                } else if (currentChar == '*') {
+                    tokens.add("times");
+                } else if (currentChar == '/') {
+                    tokens.add("div");
+                } else if (currentChar == '+') {
+                    tokens.add("plus");
+                } else if (currentChar == '-') {
+                    tokens.add("minus");
+                } else if (currentChar == ')') {
+                    tokens.add("rparen");
                 }
+
+                // symbols
+                // search for (
                 // Search for +
                 // search for -
                 // search for *
@@ -68,5 +89,6 @@ public class Test {
                 // letter,digit = token - letter = token
             }
         }
+        System.out.println(tokens);
     }
 }
