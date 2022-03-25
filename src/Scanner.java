@@ -24,7 +24,7 @@ public class Scanner {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
         // Declaring a string variable
-        String[] numbers = new String[]{"0","1","2","3","4","5","6","7","8","9"};
+        Character[] numbers = new Character[]{'0','1','2','3','4','5','6','7','8','9'};
         String line = br.readLine();
         ArrayList<String> st = new ArrayList<>();
 
@@ -38,27 +38,27 @@ public class Scanner {
             line = br.readLine();
 
         }
-        for(int x = 0; x<st.size();x++)
+        for(int i = 0; i<st.size();i++)
         {
-            if(st.get(x).contains("read")||st.get(x).contains("Read"))
+            if(st.get(i).contains("read")||st.get(i).contains("Read"))
                 tokens.add("read");
-            if(st.get(x).contains("write")||st.get(x).contains("Write"))
+            if(st.get(i).contains("write")||st.get(i).contains("Write"))
                 tokens.add("write");
-            if(!(st.get(x).contains("/*")&&st.get(x).contains("*/")||st.get(x).contains("//")))
+            if(!(st.get(i).contains("/*")&&st.get(i).contains("*/")||st.get(i).contains("//")))
             {
-                if(st.get(x).contains("*"))
+                if(st.get(i).contains("*"))
                 {
                     tokens.add("times");
                 }
-                if((st.get(x).contains(" ")))
+                if((st.get(i).contains(" ")))
                 {
-                    if(!st.get(x).contains(numbers[x]))
-                        System.out.println("ID: "+st.get(x));
+//                    if(!st.get(i).contains(numbers[i]))
+                        System.out.println("ID: "+st.get(i));
                 }
             }
-            for(int n = 0; n<numbers.length;n++)
-            {
-                if(st.get(x).contains(numbers[n]))
+
+            for (Character number : numbers) {
+//                if (st.get(i).contains(number))
                     tokens.add("number");
             }
 
