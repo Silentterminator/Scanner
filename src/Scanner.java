@@ -72,21 +72,17 @@ public class Scanner {
                     tokens.add("rparen");
                 }
 
-                // symbols
-                // search for (
-                // Search for +
-                // search for -
-                // search for *
-                // search for /
-                // search for )
                 // do the fucking math (parse tree?)
-                // add to tokens
 
                 // 5+1 ----> number plus number
+                if (currentChar == ':' && nextChar == '=') {
+                    tokens.add("assign");
+                }
                 // assign a variable??? := WALRUS OPERATOR print("assign")
                 // search for ., if followed by digit^, print("number")
                 // regular digit 99999999, print("number") BUT after finds digits, look for period, signifies a decimal, PRINT("NUMBER")
                 // letter,digit = token - letter = token
+//                if (Character.isAlphabetic(currentCha r))
             }
         }
         System.out.println(tokens);
