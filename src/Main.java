@@ -12,7 +12,7 @@ public class Main {
 
 //        }
 
-        Test test = new Test(file);
+        Scanner test = new Scanner(file);
         test.parse();
     }
 }

@@ -1,105 +1,94 @@
 import java.io.*;
-import java.util.*;
-import java.io.FileReader;
-import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Scanner {
 
-    private File file;
-    private int state;
-    private final List<String> tokens;
+    private final File file;
+    private final List<Character> characterArray = new ArrayList<>();
+    private final List<String> tokens = new ArrayList<>();
 
-    private final Set<Character> possibleCharacters = new HashSet<>();
+    private final char EMPTY_CHAR_CHARACTER = '\u0000';
+    private final char NEW_LINE_CHARACTER = '\n';
 
-    public Scanner(File file) throws IOException {
+    private final char PERIOD = '.';
+
+    public Scanner(File file) {
         this.file = file;
-        tokens = new ArrayList<>();
-        parseFile();
-        addTokens();
     }
 
-    public void parseFile() throws IOException {
-        // while not EOF run automata
+    public void parse() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        // Declaring a string variable
-        Character[] numbers = new Character[]{'0','1','2','3','4','5','6','7','8','9'};
-        String line = br.readLine();
-        ArrayList<String> st = new ArrayList<>();
-
-        // Condition holds true till
-        // there is character in a string
-
-        while (line != null)
-        {
-            // Print the string
-            st.add(line);
-            line = br.readLine();
-
+        int c;
+        // Read characters in and store them in our character array
+        while ((c = br.read()) != -1) {
+            char ch = (char) c;
+            characterArray.add(ch);
         }
-        for(int i = 0; i<st.size();i++)
-        {
-            if(st.get(i).contains("read")||st.get(i).contains("Read"))
-                tokens.add("read");
-            if(st.get(i).contains("write")||st.get(i).contains("Write"))
-                tokens.add("write");
-            if(!(st.get(i).contains("/*")&&st.get(i).contains("*/")||st.get(i).contains("//")))
-            {
-                if(st.get(i).contains("*"))
-                {
-                    tokens.add("times");
-                }
-                if((st.get(i).contains(" ")))
-                {
-//                    if(!st.get(i).contains(numbers[i]))
-                        System.out.println("ID: "+st.get(i));
-                }
-            }
 
-            for (Character number : numbers) {
-//                if (st.get(i).contains(number))
+        boolean inComment = false;                          // Variable to let us know if we're in a comment or not
+        char commentCharacter = EMPTY_CHAR_CHARACTER;       // Reference to if we're in a // comment or /* comment
+        for (int i = 0; i < characterArray.size()-1; i++) {
+
+            char currentChar = characterArray.get(i);
+            char nextChar = characterArray.get(i+1);
+
+            // if we have /* or //, set inComment to true, that way we don't parse more values until end of line or end of comment
+            if (currentChar == '/' && (nextChar == '*' || nextChar == '/')) {
+                inComment = true;
+                commentCharacter = characterArray.get(i+1);
+            }
+            if (inComment) {
+                // check for closing comment - we're in a // comment if the first condition is met
+                if (commentCharacter == '/' && currentChar == NEW_LINE_CHARACTER) {
+                    inComment = false;
+                    commentCharacter = EMPTY_CHAR_CHARACTER;
+                } else if (currentChar == '*' && nextChar == '/') {
+                    inComment = false;
+                    commentCharacter = EMPTY_CHAR_CHARACTER;
+                    i++;
+                }
+            } else {
+                if (Character.isDigit(currentChar) || (currentChar == PERIOD && Character.isDigit(nextChar))) {
+                    while (Character.isDigit(nextChar) || nextChar == PERIOD) {
+                        i++;
+                        nextChar = characterArray.get(i+1);
+                    }
                     tokens.add("number");
-            }
+                }
 
+                if (currentChar == '(') {
+                    tokens.add("lparen");
+                } else if (currentChar == '*') {
+                    tokens.add("times");
+                } else if (currentChar == '/') {
+                    tokens.add("div");
+                } else if (currentChar == '+') {
+                    tokens.add("plus");
+                } else if (currentChar == '-') {
+                    tokens.add("minus");
+                } else if (currentChar == ')') {
+                    tokens.add("rparen");
+                }
+
+                // symbols
+                // search for (
+                // Search for +
+                // search for -
+                // search for *
+                // search for /
+                // search for )
+                // do the fucking math (parse tree?)
+                // add to tokens
+
+                // 5+1 ----> number plus number
+                // assign a variable??? := WALRUS OPERATOR print("assign")
+                // search for ., if followed by digit^, print("number")
+                // regular digit 99999999, print("number") BUT after finds digits, look for period, signifies a decimal, PRINT("NUMBER")
+                // letter,digit = token - letter = token
+            }
         }
         System.out.println(tokens);
-        br.close();
     }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    private void addTokens() {
-        List<Character> token = new ArrayList<>(Arrays.asList('(', ')', '+', '-', '*', ':', '=', '.',
-                '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'));
-
-//        List<Character> token = new ArrayList<>();
-        // add lower case alphabet to tokens
-        for (int i = 65; i <= 90; i++) {
-            token.add((char) i);
-        }
-
-        // add upper case alphabet to tokens
-        for (int i = 97; i <= 122; i++) {
-            token.add((char) i);
-        }
-
-        possibleCharacters.addAll(token);
-        token.clear();
-    }
-
 }
