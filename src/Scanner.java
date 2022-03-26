@@ -18,6 +18,7 @@ public class Scanner {
 
     public Scanner(File file) {
         this.file = file;
+        addErrorCharacters();
     }
 
     public void parse() throws IOException {
@@ -30,10 +31,6 @@ public class Scanner {
             char ch = (char) c;
             characterArray.add(ch);
         }
-        errorChar.add(','); errorChar.add('!'); errorChar.add('@'); errorChar.add('#'); errorChar.add('$'); errorChar.add('%');
-        errorChar.add('^'); errorChar.add('&'); errorChar.add('_'); errorChar.add('|'); errorChar.add('?'); errorChar.add('[');
-        errorChar.add(']'); errorChar.add('{'); errorChar.add('}'); errorChar.add('<'); errorChar.add('>'); errorChar.add('"');
-        errorChar.add('`'); errorChar.add('~');
 
         boolean inComment = false;                          // Variable to let us know if we're in a comment or not
         char commentCharacter = EMPTY_CHAR_CHARACTER;       // Holds what type of comment we are in, denoted by second character, '/' or '*'
@@ -113,5 +110,12 @@ public class Scanner {
                 }
         }
         System.out.println(tokens);
+    }
+
+    private void addErrorCharacters() {
+        errorChar.add(','); errorChar.add('!'); errorChar.add('@'); errorChar.add('#'); errorChar.add('$'); errorChar.add('%');
+        errorChar.add('^'); errorChar.add('&'); errorChar.add('_'); errorChar.add('|'); errorChar.add('?'); errorChar.add('[');
+        errorChar.add(']'); errorChar.add('{'); errorChar.add('}'); errorChar.add('<'); errorChar.add('>'); errorChar.add('"');
+        errorChar.add('`'); errorChar.add('~');
     }
 }
