@@ -62,6 +62,7 @@ public class Scanner {
                 if (commentCharacter == '/' && currentChar == NEW_LINE_CHARACTER) {
                     inComment = false;
                     commentCharacter = EMPTY_CHAR_CHARACTER;
+
                 }
                 // Check for */ to close comment
                 if (currentChar == '*' && nextChar == '/') {
@@ -101,7 +102,7 @@ public class Scanner {
                         tokens.add("assign");
                     }
 
-                    if (Character.isAlphabetic(currentChar) && Character.isAlphabetic(nextChar)) {
+                    if (Character.isAlphabetic(currentChar) && Character.isAlphabetic(nextChar)&& !Character.isAlphabetic(currentChar-1)) {
                         while(Character.isAlphabetic(nextChar) && Character.isAlphabetic(nextChar+1) || Character.isDigit(nextChar+1)) {
                             i++;
                             nextChar = characterArray.get(i+1);
