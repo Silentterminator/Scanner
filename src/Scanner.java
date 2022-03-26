@@ -42,21 +42,12 @@ public class Scanner {
             char currentChar = characterArray.get(i);
             char nextChar = characterArray.get(i+1);        // Peek value
 
-            // Check for "read"
-            if(currentChar == 'r' && nextChar == 'e' && characterArray.get(i+2) == 'a' && characterArray.get(i+3) == 'd' ) {
-                tokens.add("read");
-            }
-
-            // Check for "write"
-            if(currentChar == 'w' && nextChar == 'r' && characterArray.get(i+2) == 'i' && characterArray.get(i+3) == 't' && characterArray.get(i+4) == 'e') {
-                tokens.add("write");
-            }
-
             // if we have /* or //, set inComment to true, that way we don't parse more values until end of line or end of comment
             if (currentChar == '/' && (nextChar == '*' || nextChar == '/')) {
                 inComment = true;
-                commentCharacter = characterArray.get(i+1);
+                commentCharacter = nextChar;
             }
+
             if (inComment) {
                 // check for closing comment - we're in a // comment if the first condition is met
                 if (commentCharacter == '/' && currentChar == NEW_LINE_CHARACTER) {
@@ -64,7 +55,7 @@ public class Scanner {
                     commentCharacter = EMPTY_CHAR_CHARACTER;
                 }
                 // Check for */ to close comment
-                if (currentChar == '*' && nextChar == '/') {
+                else if (currentChar == '*' && nextChar == '/') {
                     inComment = false;
                     commentCharacter = EMPTY_CHAR_CHARACTER;
                     i++;
@@ -83,7 +74,14 @@ public class Scanner {
                         }
                         tokens.add("number");
                     }
-                    if (currentChar == '(') {
+
+                    if (currentChar == 'r' && nextChar == 'e' && characterArray.get(i+2) == 'a' && characterArray.get(i+3) == 'd') {
+                        tokens.add("read");
+                        i+=3;
+                    } else if (currentChar == 'w' && nextChar == 'r' && characterArray.get(i+2) == 'i' && characterArray.get(i+3) == 't' && characterArray.get(i+4) == 'e') {
+                    tokens.add("write");
+                    i+=4;
+                    } else if (currentChar == '(') {
                         tokens.add("lparen");
                     } else if (currentChar == '*') {
                         tokens.add("times");
@@ -95,13 +93,9 @@ public class Scanner {
                         tokens.add("minus");
                     } else if (currentChar == ')') {
                         tokens.add("rparen");
-                    }
-
-                    if (currentChar == ':' && nextChar == '=') {
+                    } else if (currentChar == ':' && nextChar == '=') {
                         tokens.add("assign");
-                    }
-
-                    if (Character.isAlphabetic(currentChar) && Character.isAlphabetic(nextChar)) {
+                    } else if (Character.isAlphabetic(currentChar) && Character.isAlphabetic(nextChar)) {
                         while(Character.isAlphabetic(nextChar) && Character.isAlphabetic(nextChar+1) || Character.isDigit(nextChar+1)) {
                             i++;
                             nextChar = characterArray.get(i+1);
