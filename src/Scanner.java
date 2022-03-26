@@ -46,15 +46,15 @@ public class Scanner
             char currentChar = characterArray.get(i);
             char nextChar = characterArray.get(i+1);        //peek value
 
-            //Finding error characters within characterArray
-            for (int j = 0; j<errorChar.size()-1;j++)
-            {
-                if (characterArray.contains(errorChar.get(j)))
-                {
-                    System.out.println("Error");
-                    exit(0);                        //Exiting program (found error character)
-                }
-            }
+//            //Finding error characters within characterArray
+//            for (int j = 0; j<errorChar.size()-1;j++)
+//            {
+//                if (characterArray.contains(errorChar.get(j)))
+//                {
+//                    System.out.println("Error");
+//                    exit(0);                        //Exiting program (found error character)
+//                }
+//            }
 
             // if we have /* or //, set inComment to true, that way we don't parse more values until end of line or end of comment
             if (currentChar == '/' && (nextChar == '*' || nextChar == '/'))
@@ -80,6 +80,16 @@ public class Scanner
             }
             else
                 {
+                    //Finding error characters within characterArray
+                    for (int j = 0; j<errorChar.size()-1;j++)
+                    {
+                        if (currentChar == (errorChar.get(j)))
+                        {
+                            System.out.println("Error");
+                            exit(0);                        //Exiting program (found error character)
+                        }
+                    }
+
                     if (Character.isDigit(currentChar) || (currentChar == PERIOD && Character.isDigit(nextChar)))
                     {
                         while (Character.isDigit(nextChar) || nextChar == PERIOD)
