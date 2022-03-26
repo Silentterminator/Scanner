@@ -8,14 +8,14 @@ Main class:
 
 Scanner class:
     Instance Variables:
-        File file - our input file
+        File file - Our input text file
         List<String> characterArray - Allowed characters according to the automata provided
         List<String> tokens - List of tokens that are detected by the scanner
         Set<Character> errorChar - Characters that return an error
 
-        EMPTY_CHAR_CHARACTER - Java character that holds an empty position
-        NEW_LINE_CHARACTER - Character that denotes a new line in a text file
-        PERIOD - Constant period for easier code readability
+        EMPTY_CHAR_CHARACTER - Java character that holds an empty position. Used as a placeholder to null a char, since not a native Java feature. Is updated when a comment is detected.
+        NEW_LINE_CHARACTER - Character that denotes a new line in a text file. Used when reading a new line in a text file. Used for easier reference and code readability.
+        PERIOD - Constant period for easier code readability. Period is used when signifying numbers with decimal values
 
     Constructor:
         Passes file and fills the error list with characters
@@ -27,11 +27,10 @@ Scanner class:
             commentCharacter - The second character in the comment, so we know what we're looking for to exit the comment
 
         Function actions:
-            Read file and store characters in characterArray
+            Read file with BufferedReader
+            Loop through BufferedReader and store characters in characterArray
 
             Loops through characterArray
-            Check for "read"
-            Check for "write"
 
             Check for // or /* comments
 
@@ -41,16 +40,31 @@ Scanner class:
                 Find error characters
                     If there is an error character, exit
 
-                Check for number
-                Check for left parenthesis
-                Check for asterisk (times)
-                Check for forward slash (division)
-                Check for plus
-                Check for minus
-                Check for right parenthesis
-                Check for := (assign)
-                Check for character string
+                If "read":
+                    add "read" to tokens
+                    Increment loop variable by 3 to get to end of "read" string
+                Else If "write":
+                    add "write" to tokens
+                    Increment loop variable by 4 to get to end of "write" string
+                Else if number:
+                    add "number" to tokens
+                Else if left parenthesis
+                    add "lparen" to tokens
+                Else if asterisk (times):
+                    add "times" to tokens
+                Else if forward slash (division):
+                    add "div" to tokens
+                Else if plus:
+                    add "plus" to tokens
+                Else if minus:
+                    add "minus" to tokens
+                Else if right parenthesis
+                    add "rparen" to tokens
+                Else if :=:
+                    add "assign" to tokens
+                Else if character string
                     Scan whole string
+                    Add "id" to tokens
 
             Print list of tokens
 
