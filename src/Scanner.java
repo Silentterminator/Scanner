@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import static java.lang.System.exit;
 
 public class Scanner {
@@ -8,7 +11,7 @@ public class Scanner {
     private final File file;
     private final List<Character> characterArray = new ArrayList<>();
     private final List<String> tokens = new ArrayList<>();
-    private final List<Character> errorChar = new ArrayList<>();
+    private final Set<Character> errorChar = new HashSet<>();
 
     // How to find the comments
     private final char EMPTY_CHAR_CHARACTER = '\u0000';
@@ -68,11 +71,9 @@ public class Scanner {
                 }
             } else {
                     // Finding error characters within characterArray
-                    for (int j = 0; j < errorChar.size()-1; j++) {
-                        if (currentChar == (errorChar.get(j))) {
-                            System.out.println("Error");
-                            exit(0);                        //Exiting program (found error character)
-                        }
+                    if (errorChar.contains(currentChar)) {
+                        System.out.println("Error");
+                        exit(0);                        //Exiting program (found error character)
                     }
 
                     if (Character.isDigit(currentChar) || (currentChar == PERIOD && Character.isDigit(nextChar))) {
