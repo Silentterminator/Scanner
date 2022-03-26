@@ -1,0 +1,49 @@
+Instance Variables:
+    File file - our input file
+    List<String> characterArray - Allowed characters according to the automata provided
+    List<String> tokens - List of tokens that are detected by the scanner
+    List<Character> errorChar - Characters that return an error
+
+    EMPTY_CHAR_CHARACTER - Java character that holds an empty position
+    NEW_LINE_CHARACTER - Character that denotes a new line in a text file
+    PERIOD - Constant period for easier code readability
+
+Constructor:
+    Passes file and fills the error list with characters
+
+
+Function parse():
+    Function variables:
+        inComment - Stores if we have scanned a comment sequence or not
+        commentCharacter - The second character in the comment, so we know what we're looking for to exit the comment
+
+    Function actions:
+        Read file and store characters in characterArray
+
+        Loops through characterArray
+        Check for "read"
+        Check for "write"
+
+        Check for // or /* comments
+
+        If comment:
+            Continue scan until comment termination condition
+        Else:
+            Find error characters
+                If there is an error character, exit
+
+            Check for number
+            Check for left parenthesis
+            Check for asterisk (times)
+            Check for forward slash (division)
+            Check for plus
+            Check for minus
+            Check for right parenthesis
+            Check for := (assign)
+            Check for character string
+                Scan whole string
+
+        Print list of tokens
+
+function addErrorCharacters():
+    Add list of error characters to errorChar list
