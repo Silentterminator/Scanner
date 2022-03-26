@@ -67,8 +67,8 @@ public class Scanner {
                     i++;
                 }
             } else {
-                    //Finding error characters within characterArray
-                    for (int j = 0; j<errorChar.size()-1;j++) {
+                    // Finding error characters within characterArray
+                    for (int j = 0; j < errorChar.size()-1; j++) {
                         if (currentChar == (errorChar.get(j))) {
                             System.out.println("Error");
                             exit(0);                        //Exiting program (found error character)
