@@ -46,16 +46,10 @@ public class Scanner
             char currentChar = characterArray.get(i);
             char nextChar = characterArray.get(i+1);        //peek value
 
-//            //Finding error characters within characterArray
-//            for (int j = 0; j<errorChar.size()-1;j++)
-//            {
-//                if (characterArray.contains(errorChar.get(j)))
-//                {
-//                    System.out.println("Error");
-//                    exit(0);                        //Exiting program (found error character)
-//                }
-//            }
-
+            if(currentChar == 'r' && nextChar == 'e' && characterArray.get(i+2) == 'a' && characterArray.get(i+3) == 'd' )
+                tokens.add("read");
+            if(currentChar == 'w' && nextChar == 'r' && characterArray.get(i+2) == 'i' && characterArray.get(i+3) == 't' && characterArray.get(i+4) == 'e')
+                tokens.add("write");
             // if we have /* or //, set inComment to true, that way we don't parse more values until end of line or end of comment
             if (currentChar == '/' && (nextChar == '*' || nextChar == '/'))
             {
