@@ -11,7 +11,7 @@ Scanner class:
         File file - our input file
         List<String> characterArray - Allowed characters according to the automata provided
         List<String> tokens - List of tokens that are detected by the scanner
-        List<Character> errorChar - Characters that return an error
+        Set<Character> errorChar - Characters that return an error
 
         EMPTY_CHAR_CHARACTER - Java character that holds an empty position
         NEW_LINE_CHARACTER - Character that denotes a new line in a text file
