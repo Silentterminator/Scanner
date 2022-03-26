@@ -1,6 +1,7 @@
 read
 /* TestFile!!eone1! */
 // comment
+weij
 := 12
 412.31232*(.5123+23332)
 jang3728
