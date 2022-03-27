@@ -20,9 +20,9 @@ public class Scanner {
     // Helps find digit.digit
     private final char PERIOD = '.';
 
-    public Scanner(File file) {                             //TODO what does this do? Comment here. It know it has something to do with Main.java
-        this.file = file;
-        addErrorCharacters();
+    public Scanner(File file) {                             //Called from the main with the text file used
+        this.file = file;                                   //Setting the file to be used throughout the code
+        addErrorCharacters();                               //Calling addErrorCharacters function
     }
 
     public void parse() throws IOException {
@@ -77,14 +77,15 @@ public class Scanner {
                         }                                       // because the longest value is the token
                         tokens.add("number");
                     }
-                    //TODO explain the bellow
+                    //Find read and write within the characterArray
                     if (currentChar == 'r' && nextChar == 'e' && characterArray.get(i+2) == 'a' && characterArray.get(i+3) == 'd') {
                         tokens.add("read");
                         i+=3;
                     } else if (currentChar == 'w' && nextChar == 'r' && characterArray.get(i+2) == 'i' && characterArray.get(i+3) == 't' && characterArray.get(i+4) == 'e') {
                     tokens.add("write");
                     i+=4;
-                    //TODO explain the above
+
+                    //Finding symbols within the characterArray
                     } else if (currentChar == '(') {
                         tokens.add("lparen");
                     } else if (currentChar == '*') {
@@ -98,7 +99,7 @@ public class Scanner {
                     } else if (currentChar == ')') {
                         tokens.add("rparen");
 
-                    // Assigning a value to something is also a token need :=
+                    // Assigning a value to something is also a token :=
                     } else if (currentChar == ':' && nextChar == '=') {
                         tokens.add("assign");
 
@@ -110,11 +111,11 @@ public class Scanner {
                             i++;
                             nextChar = characterArray.get(i+1); //Goes until the very end unit no more digits or letters
                         }
-                        tokens.add("id");                       //Then prints id
+                        tokens.add("id");                       //Then adds id token
                     }
                 }
         }
-        System.out.println(tokens);                             //Then token
+        System.out.println(tokens);                             //Print all tokens found
     }
 
     private void addErrorCharacters() {
