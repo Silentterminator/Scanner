@@ -1,11 +1,5 @@
 read
-/* TestFile!!eone1! */
-// comment
-weij
-:= 12
-412.31232*(.5123+23332)
-jang3728
-22-124
-99/12
-.12+444
-ewufhi
+1+2/8
+wrong:=
+3
+correct

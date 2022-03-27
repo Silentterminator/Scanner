@@ -7,48 +7,51 @@ import java.util.Set;
 import static java.lang.System.exit;
 
 public class Scanner {
-
-    private final File file;
+    // Character arrays initialized (array, token, & errorChar)
+    private final File file;                                // from our text document. Seen in the Main.java
     private final List<Character> characterArray = new ArrayList<>();
     private final List<String> tokens = new ArrayList<>();
     private final Set<Character> errorChar = new HashSet<>();
 
     // How to find the comments
-    private final char EMPTY_CHAR_CHARACTER = '\u0000';
-    private final char NEW_LINE_CHARACTER = '\n';
+    private final char EMPTY_CHAR_CHARACTER = '\u0000';     // ASCII values
+    private final char NEW_LINE_CHARACTER = '\n';           // What gets read out in as actual characters in the character array.
+                                                            // So when those values are found, it knows that we are ending a comment
     // Helps find digit.digit
     private final char PERIOD = '.';
 
-    public Scanner(File file) {
+    public Scanner(File file) {                             //TODO what does this do? Comment here. It know it has something to do with Main.java
         this.file = file;
         addErrorCharacters();
     }
 
     public void parse() throws IOException {
-        // Reads text from file
+        // Reads text from file inputted
         BufferedReader br = new BufferedReader(new FileReader(file));
 
-        int c;
+        int c;                                              // Incrementing value
+
         // Read characters in and store them in our character array
         while ((c = br.read()) != -1) {
-            char ch = (char) c;
+            char ch = (char) c;                             // setting Ch<- Character to the character value of c
             characterArray.add(ch);
         }
 
         boolean inComment = false;                          // Variable to let us know if we're in a comment or not
         char commentCharacter = EMPTY_CHAR_CHARACTER;       // Holds what type of comment we are in, denoted by second character, '/' or '*'
 
-        for (int i = 0; i < characterArray.size()-1; i++) {
-            char currentChar = characterArray.get(i);
+        // Whole automata is within this for loop
+        for (int i = 0; i < characterArray.size()-1; i++) { // Starts from 0, going to size()-1 and incrementing by 1
+            char currentChar = characterArray.get(i);       // Initial State. keeps increasing as it keeps going through the for loop
             char nextChar = characterArray.get(i+1);        // Peek value
 
             // if we have /* or //, set inComment to true, that way we don't parse more values until end of line or end of comment
             if (currentChar == '/' && (nextChar == '*' || nextChar == '/')) {
                 inComment = true;
-                commentCharacter = nextChar;
+                commentCharacter = nextChar;                // Set to the peak
             }
 
-            if (inComment) {
+            if (inComment) {                                //The above is If it's inside a comment
                 // check for closing comment - we're in a // comment if the first condition is met
                 if (commentCharacter == '/' && currentChar == NEW_LINE_CHARACTER) {
                     inComment = false;
@@ -66,21 +69,22 @@ public class Scanner {
                         System.out.println("Error");
                         exit(0);                        //Exiting program (found error character)
                     }
-
+                    // If no comments then it checks for digits 0-9. So it's a digit or a period followed my a digit
                     if (Character.isDigit(currentChar) || (currentChar == PERIOD && Character.isDigit(nextChar))) {
                         while (Character.isDigit(nextChar) || nextChar == PERIOD) {
-                            i++;
-                            nextChar = characterArray.get(i+1);
-                        }
+                            i++;                            // If true then it continues looking through the array
+                            nextChar = characterArray.get(i+1); // Moves the nextChar to find the ending pert of the number that we are looking for
+                        }                                       // because the longest value is the token
                         tokens.add("number");
                     }
-
+                    //TODO explain the bellow
                     if (currentChar == 'r' && nextChar == 'e' && characterArray.get(i+2) == 'a' && characterArray.get(i+3) == 'd') {
                         tokens.add("read");
                         i+=3;
                     } else if (currentChar == 'w' && nextChar == 'r' && characterArray.get(i+2) == 'i' && characterArray.get(i+3) == 't' && characterArray.get(i+4) == 'e') {
                     tokens.add("write");
                     i+=4;
+                    //TODO explain the above
                     } else if (currentChar == '(') {
                         tokens.add("lparen");
                     } else if (currentChar == '*') {
@@ -93,18 +97,24 @@ public class Scanner {
                         tokens.add("minus");
                     } else if (currentChar == ')') {
                         tokens.add("rparen");
+
+                    // Assigning a value to something is also a token need :=
                     } else if (currentChar == ':' && nextChar == '=') {
                         tokens.add("assign");
+
+                    //With in this ID token we are looking if currentChar & nextChar is a letter
                     } else if (Character.isAlphabetic(currentChar) && Character.isAlphabetic(nextChar)) {
+
+                    // Checks if the next character is a letter or a digit while the first one is a letter
                         while(Character.isAlphabetic(nextChar) && Character.isAlphabetic(nextChar+1) || Character.isDigit(nextChar+1)) {
                             i++;
-                            nextChar = characterArray.get(i+1);
+                            nextChar = characterArray.get(i+1); //Goes until the very end unit no more digits or letters
                         }
-                        tokens.add("id");
+                        tokens.add("id");                       //Then prints id
                     }
                 }
         }
-        System.out.println(tokens);
+        System.out.println(tokens);                             //Then token
     }
 
     private void addErrorCharacters() {
